@@ -1,10 +1,24 @@
 {
-    "makefile.launchConfigurations": [
-        {
-            "binaryPath": "/usr/bin/make",
-            "binaryArgs": [
-                "flash"
-            ]
-        }
-    ]
+	"makefile.launchConfigurations": [
+		{
+			"binaryPath": "/usr/bin/make",
+			"binaryArgs": ["flash"]
+		}
+	],
+	"files.associations": {
+		"**/*.html": "html",
+		"**/requirements{/**,*}.{txt,in}": "pip-requirements",
+		"*.scss": "scss",
+		"*.tsx": "typescriptreact",
+		"stdio.h": "c",
+		"uart2.h": "c",
+		"stm8s.h": "c",
+		"lcd_i2c.h": "c",
+		"delay.h": "c",
+		"milis.h": "c",
+		"stm8s_conf.h": "c",
+		"swi2c.h": "c",
+		"stm8s_it.h": "c",
+		"key_40.h": "c"
+	}
 }

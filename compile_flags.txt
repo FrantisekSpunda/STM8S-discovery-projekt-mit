@@ -8,6 +8,8 @@
 -I../inc
 -I../SPL/inc
 -I../SPL/src
+-I../SPL-STM8S105/inc
+-I../SPL-STM8S105/src
 -I/usr/local/stow/sdcc-gas/share/sdcc/include
 -D_SDCC
 -D_SDCC_

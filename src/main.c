@@ -1,48 +1,52 @@
+#include <stdio.h>
 #include "stm8s.h"
+
 #include "milis.h"
+#include "delay.h"
 
-//#include "delay.h"
-//#include <stdio.h>
-//#include "uart1.h"
+// #include "delay.h"
+#include "uart2.h"
+#include "key_40.h"
 
-#define LED_PORT GPIOD
-#define LED_PIN  GPIO_PIN_4
-
-#define LOW(BAGR) GPIO_WriteLow(BAGR##_PORT, BAGR##_PIN)
-#define HIGH(BAGR) GPIO_WriteHigh(BAGR##_PORT, BAGR##_PIN)
-#define REVERSE(BAGR) GPIO_WriteReverse(BAGR##_PORT, BAGR##_PIN)
-
-#define READ(BAGR) GPIO_ReadInputPin(BAGR##_PORT, BAGR##_PIN) 
-#define PUSH(BAGR) (GPIO_ReadInputPin(BAGR##_PORT, BAGR##_PIN)==RESET) 
-
+void onRight()
+{
+    printf("turn right");
+}
+void onLeft()
+{
+    printf("turn left");
+}
 
 void setup(void)
 {
-    CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV1);      // taktovani MCU na 16MHz
-    GPIO_Init(LED_PORT, LED_PIN, GPIO_MODE_OUT_PP_LOW_SLOW);
+    CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV1); // takt MCU na 16MHz
 
     init_milis();
-    //init_uart1();
+    init_uart2();
+    init_key_40();
 }
-
 
 int main(void)
 {
-  
-    uint32_t time = 0;
-
     setup();
 
-    while (1) {
-        if (milis() - time > 333 ) {
-            REVERSE(LED); 
+    uint32_t time = 0;
+
+    while (1)
+    {
+        uint8_t encoder1 = position_key_40(&onRight, &onLeft);
+
+        if (milis() - time > 500)
+        {
             time = milis();
-            //printf("%ld\n", time);
+            printf("PIN 0: %i\r\n", encoder1);
         }
 
-        //LED_REVERSE; 
-        //delay_ms(333);
-        //printf("Funguje to!!!\n");
+        // if (milis() - time > 500)
+        // {
+        //
+        //     time = milis();
+        // }
     }
 }
 

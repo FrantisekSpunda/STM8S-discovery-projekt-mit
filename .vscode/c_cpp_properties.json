@@ -1,37 +1,41 @@
 {
-    "env": {
-        "myDefaultIncludePath": [
-            "${workspaceFolder}",
-            "${workspaceFolder}/inc"
-        ],
-        "myCompilerPath": "/usr/bin/sdcc"
-    },
-    "configurations": [
-        {
-            "name": "STM8",
-            "includePath": [
-                "${workspaceFolder}/inc",
-                "${workspaceFolder}/src",
-                "${workspaceFolder}/../SPL/inc/",
-                "${workspaceFolder}/SPL/inc/"
-            ],
-            "defines": [
-                "STM8S",
-                "_SDCC_"
-            ],
-            "compilerPath": "/usr/bin/sdcc",
-            "cStandard": "c99",
-            "cppStandard": "c++11",
-            "intelliSenseMode": "gcc-x64",
-            "compilerArgs": [
-                "-I inc",
-                "-I SPL/inc",
-                "-I ../SPL/inc",
-                "-mstm8",
-                "-lstm8",
-                "--std-sdcc99"
-            ]
-        }
-    ],
-    "version": 4
+	"env": {
+		"myDefaultIncludePath": ["${workspaceFolder}", "${workspaceFolder}/inc"],
+		"myCompilerPath": "/usr/bin/sdcc"
+	},
+	"configurations": [
+		{
+			"name": "STM8",
+			"includePath": [
+				"${workspaceFolder}/inc",
+				"${workspaceFolder}/src",
+				"${workspaceFolder}/SPL/inc",
+				"${workspaceFolder}/inc/",
+				"${workspaceFolder}/src",
+				"${workspaceFolder}/inc",
+				"${workspaceFolder}/SPL/inc",
+				"${workspaceFolder}/SPL/src",
+				"${workspaceFolder}/../SPL-STM8S105/inc",
+				"${workspaceFolder}/../SPL-STM8S105/src"
+			],
+			"defines": ["STM8S", "_SDCC_"],
+			"compilerPath": "/usr/bin/sdcc",
+			"cStandard": "c99",
+			"cppStandard": "c++11",
+			"intelliSenseMode": "gcc-x64",
+			"compilerArgs": [
+				"-I.",
+				"-I./inc/",
+				"-I./src",
+				"-I../inc",
+				"-I../SPL/inc",
+				"-I../SPL/src",
+				"-I../SPL-STM8S105/inc",
+				"-I../SPL-STM8S105/src",
+				"-I /usr/local/stow/sdcc-gas/share/sdcc/include"
+			],
+			"configurationProvider": "ms-vscode.makefile-tools"
+		}
+	],
+	"version": 4
 }
