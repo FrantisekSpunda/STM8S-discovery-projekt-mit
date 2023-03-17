@@ -36,6 +36,9 @@ uint8_t position_key_40(void (*onRight)(), void (*onLeft)())
 {
   stateCLK = READ(CLK);
 
+  /*
+  * ! asi jen na nástupnou troubo
+  */
   if (stateCLK != stateCLKprev)
   {
     stateDT = READ(DT);
