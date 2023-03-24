@@ -4,18 +4,18 @@
 #include "milis.h"
 #include "delay.h"
 
-#include "delay.h"
 #include "uart2.h"
-// #include "key_40.h"
+#include "key_40.h"
 #include "LCD_I2C.h"
+#include "DHT_11.h"
 
 void onRight()
 {
-    printf("turn right");
+    // printf("turn right ->\n\r");
 }
 void onLeft()
 {
-    printf("turn left");
+    // printf("turn left <-\n\r");
 }
 
 void setup(void)
@@ -24,37 +24,39 @@ void setup(void)
 
     init_milis();
     init_uart2();
-    LCD_I2C_Init(0x27, 16, 2);
-
     // init_key_40();
+    init_DHT_11();
+    // LCD_I2C_Init(0x27, 16, 2);
 }
 
 int main(void)
 {
     setup();
-    LCD_I2C_Clear();    
+    /*
+    uint8_t encoder1 = 2;
     uint32_t time = 0;
+    char text[10];
+    */
 
-    LCD_I2C_NoBacklight();
-    delay_ms(1000);
-    LCD_I2C_Backlight();
-    delay_ms(1000);
+    uint32_t time = 0;
+    uint32_t lasttime = 0;
+
+    uint16_t bagr;
+
     while (1)
     {
-        // uint8_t encoder1 = position_key_40(&onRight, &onLeft);
+        get_data_DHT_11();
+        /*
+        encoder1 = position_key_40(&onRight, &onLeft);
 
-        if (milis() - time > 500)
+        if (milis() - time > 100)
         {
             time = milis();
-            LCD_I2C_Print("Bobek");
-            printf("PIN 0: %i\r\n", 3);
+            sprintf(text, "%d", encoder1);
+            LCD_I2C_Clear();
+            LCD_I2C_Print(text);
         }
-
-        // if (milis() - time > 500)
-        // {
-        //
-        //     time = milis();
-        // }
+        */
     }
 }
 

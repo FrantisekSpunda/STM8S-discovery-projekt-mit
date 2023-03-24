@@ -18,7 +18,7 @@
 /**
  * For read pins. Enter CLK, DT or SW
  */
-#define READ(PIN) (GPIO_ReadInputPin(PIN##_PORT, PIN##_PIN) == RESET)
+#define READ_KEY_40(PIN) (GPIO_ReadInputPin(PIN##_PORT, PIN##_PIN) == RESET)
 
 // Functions for encoder
 void init_key_40();

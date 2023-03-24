@@ -50,3 +50,10 @@ _onLeft
 _onRight
 _LCD_I2C_Home
 _LCD_I2C_NoBacklight
+_LCD_I2C_SetCursor
+_GPIO_Init
+_delay_ms
+_position_key_40
+_LCD_I2C_Init
+_GPIO_WriteLow
+_init_DHT_11
