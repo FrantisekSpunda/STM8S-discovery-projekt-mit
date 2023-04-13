@@ -1,7 +1,7 @@
 #include "stm8s.h"
 #include "milis.h"
 
-//#include "delay.h"
+// #include "delay.h"
 #include <stdio.h>
 #include "uart2.h"
 #include "main.h"
@@ -11,13 +11,17 @@ uint16_t times[Mindex];
 uint16_t last_counter = 0;
 uint64_t data = 0;
 
-typedef enum { WAKE, DATA, SLEEEP } state_t;
+typedef enum
+{
+    WAKE,
+    DATA,
+    SLEEEP
+} state_t;
 state_t state = SLEEEP;
-
 
 void setup(void)
 {
-    CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV1);      // taktovani MCU na 16MHz
+    CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV1); // taktovani MCU na 16MHz
     GPIO_Init(LED_PORT, LED_PIN, GPIO_MODE_OUT_PP_LOW_SLOW);
     GPIO_Init(BTN_PORT, BTN_PIN, GPIO_MODE_IN_FL_NO_IT);
     GPIO_Init(DHT11_PORT, DHT11_PIN, GPIO_MODE_IN_PU_IT);
@@ -38,7 +42,6 @@ void setup(void)
     init_uart2();
 }
 
-
 int main(void)
 {
 
@@ -49,48 +52,60 @@ int main(void)
 
     setup();
 
-    while (1) {
-        if (milis() - time > 5000) {
+    while (1)
+    {
+        if (milis() - time > 5000)
+        {
             REVERSE(LED);
             time = milis();
             bagr = TIM2_GetCounter();
             printf("\n\rJedem...%u\n\r", bagr);
+            TIM2_SetCounter(0);
+            last_counter = 0;
+            index = 0;
+            data = 0LL;
             state = WAKE;
         }
 
-        switch (state) {
+        switch (state)
+        {
 
         case SLEEEP:
             lasttime = milis();
             break;
 
         case WAKE:
-            if (milis() - lasttime < 19) {
+            if (milis() - lasttime < 40)
+            {
                 LOW(TRIGGER);
-            } else {
+            }
+            else
+            {
                 lasttime = milis();
-                TIM2_SetCounter(0);
-                last_counter = 0;
-                index = 0;
-                data = 0LL;
                 HIGH(TRIGGER);
                 state = DATA;
             }
             break;
 
         case DATA:
-            if (milis() - lasttime > 6) {
+            if (milis() - lasttime > 6)
+            {
                 lasttime = milis();
-                for (int i = 0; i < index; ++i) {
-                   printf("%d: %d, ", i, times[i]) ;
+                for (int i = 0; i < index; ++i)
+                {
+                    printf("%d: %d, ", i, times[i]);
                 }
                 printf("\n\rdata: 0b ");
                 uint64_t m = 1LL << 39;
                 uint8_t i = 0;
-                while (m) {
-                    if (data & m) {
+                while (m)
+                {
+                    if (data & m)
+                    {
                         putchar('1');
-                    } else {
+                    }
+                    else
+                    {
                         putchar('0');
                     }
                     if (++i % 8 == 0)
@@ -109,7 +124,10 @@ int main(void)
                        temperatureH, temperatureL);
                 printf("checksum: ");
                 printf(humidityH + humidityL + temperatureH +
-                       temperatureL == checksum ? ":-)" : ";-(");
+                                   temperatureL ==
+                               checksum
+                           ? ":-)"
+                           : ";-(");
                 printf("\n");
                 printf("vlhkost: %d %%, teplota: %d.%d °C\n\r", humidityH,
                        temperatureH, temperatureL);

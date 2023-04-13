@@ -128,23 +128,24 @@ extern uint16_t times[Mindex];
 
 INTERRUPT_HANDLER(EXTI_PORTB_IRQHandler, 4)
 {
-    uint16_t pulse_length;
+  uint16_t pulse_length;
 
-    putchar('X');
-
-    pulse_length = TIM2_GetCounter() - last_counter;
-    last_counter = TIM2_GetCounter();  //  uložím si na příští měření
-    if (READ(DHT11) == RESET) { // Log 0
-        if (pulse_length > 15 && pulse_length < 30) {
-            data = data << 1;
-            times[index++] = pulse_length;
-        }
-        if (pulse_length > 40 && pulse_length < 74) { // Log 1
-            data <<= 1;
-            data = data | 1;
-            times[index++] = pulse_length;
-        }
+  pulse_length = TIM2_GetCounter() - last_counter;
+  last_counter = TIM2_GetCounter(); //  uložím si na příští měření
+  if (READ(DHT11) == RESET)
+  { // Log 0
+    if (pulse_length > 15 && pulse_length < 30)
+    {
+      data = data << 1;
+      times[index++] = pulse_length;
     }
+    if (pulse_length > 40 && pulse_length < 74)
+    { // Log 1
+      data <<= 1;
+      data = data | 1;
+      times[index++] = pulse_length;
+    }
+  }
 }
 
 /**
