@@ -57,3 +57,7 @@ _position_key_40
 _LCD_I2C_Init
 _GPIO_WriteLow
 _init_DHT_11
+_times
+_last_counter
+_index
+_data

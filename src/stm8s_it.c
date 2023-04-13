@@ -27,6 +27,8 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm8s_it.h"
+#include "main.h"
+#include <stdio.h>
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -119,12 +121,31 @@ INTERRUPT_HANDLER(EXTI_PORTA_IRQHandler, 3)
 //   * @param  None
 //   * @retval None
 //   */
-// INTERRUPT_HANDLER(EXTI_PORTB_IRQHandler, 4)
-// {
-//   /* In order to detect unexpected events during development,
-//      it is recommended to set a breakpoint on the following instruction.
-//   */
-// }
+extern uint16_t index;
+extern uint64_t data;
+extern uint16_t last_counter;
+extern uint16_t times[Mindex];
+
+INTERRUPT_HANDLER(EXTI_PORTB_IRQHandler, 4)
+{
+    uint16_t pulse_length;
+
+    putchar('X');
+
+    pulse_length = TIM2_GetCounter() - last_counter;
+    last_counter = TIM2_GetCounter();  //  uložím si na příští měření
+    if (READ(DHT11) == RESET) { // Log 0
+        if (pulse_length > 15 && pulse_length < 30) {
+            data = data << 1;
+            times[index++] = pulse_length;
+        }
+        if (pulse_length > 40 && pulse_length < 74) { // Log 1
+            data <<= 1;
+            data = data | 1;
+            times[index++] = pulse_length;
+        }
+    }
+}
 
 /**
  * @brief  External Interrupt PORTC Interrupt routine
