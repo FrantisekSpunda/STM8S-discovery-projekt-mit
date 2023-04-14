@@ -61,3 +61,5 @@ _times
 _last_counter
 _index
 _data
+_read_DHT_11
+_getValue

@@ -1,13 +1,18 @@
-#ifndef __MAIN_H__
-#define __MAIN_H__
+#ifndef __DHT_11_H__
+#define __DHT_11_H__
 
+#include "stm8s.h"
 
-#define LED_PORT GPIOC
-#define LED_PIN  GPIO_PIN_5
-#define BTN_PORT GPIOE
-#define BTN_PIN  GPIO_PIN_4
 #define TRIGGER_PORT GPIOB
 #define TRIGGER_PIN GPIO_PIN_4
+
+#define DHT11_PORT GPIOB
+#define DHT11_PIN GPIO_PIN_5
+
+
+#define TRIGGER_PORT GPIOB
+#define TRIGGER_PIN GPIO_PIN_4
+
 #define DHT11_PORT GPIOB
 #define DHT11_PIN GPIO_PIN_5
 
@@ -17,7 +22,13 @@
 
 #define READ(BAGR) GPIO_ReadInputPin(BAGR##_PORT, BAGR##_PIN)
 #define PUSH(BAGR) (GPIO_ReadInputPin(BAGR##_PORT, BAGR##_PIN)==RESET)
+#define Mindex 99
 
-#define Mindex  99
+typedef enum { WAKE, DATA, SLEEEP } state_t;
+
+void init_DHT_11();
+uint64_t read_DHT_11();
+char * getValue(uint64_t data, char value);
+
 
 #endif

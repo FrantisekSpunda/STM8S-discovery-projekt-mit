@@ -105,7 +105,7 @@ void LCD_I2C_Display()
 void LCD_I2C_Clear()
 {
   LCD_I2C_Command(LCD_I2C_CLEARDISPLAY);
-  delay_us(2000);
+  delay_us(1000);
 }
 
 void LCD_I2C_Home()
