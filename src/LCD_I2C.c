@@ -148,6 +148,26 @@ void LCD_I2C_SetCursor(uint8_t col, uint8_t row)
   LCD_I2C_Command(LCD_I2C_SETDDRAMADDR | (col + row_offsets[row]));
 }
 
+void LCD_I2C_cursor(int8_t state)
+{
+  if (state)
+    _lcd_i2c_displaycontrol |= LCD_I2C_CURSORON;
+  else
+    _lcd_i2c_displaycontrol &= ~LCD_I2C_CURSORON;
+
+  LCD_I2C_Command(LCD_I2C_DISPLAYCONTROL | _lcd_i2c_displaycontrol);
+}
+
+void LCD_I2C_blink(int8_t state)
+{
+  if (state)
+    _lcd_i2c_displaycontrol |= LCD_I2C_BLINKON;
+  else
+    _lcd_i2c_displaycontrol &= LCD_I2C_BLINKON;
+
+  LCD_I2C_Command(LCD_I2C_DISPLAYCONTROL | _lcd_i2c_displaycontrol);
+}
+
 void LCD_I2C_Print(uint8_t *string)
 {
   while (*string)

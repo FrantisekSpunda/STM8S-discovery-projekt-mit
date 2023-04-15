@@ -1,5 +1,5 @@
 #ifndef __LCD_I2C_H
-#define __LCD_I2C_H
+#define __LCD_I2C_H 1
 
 #define LCD_I2C_CLEARDISPLAY 0x01
 #define LCD_I2C_RETURNHOME 0x02
@@ -68,6 +68,8 @@ void LCD_I2C_NoBacklight();
 void LCD_I2C_Backlight();
 void LCD_I2C_CreateChar(uint8_t location, uint8_t charmap[]);
 void LCD_I2C_SetCursor(uint8_t col, uint8_t row);
+void LCD_I2C_cursor(int8_t state);
+void LCD_I2C_blink(int8_t state);
 void LCD_I2C_Print(uint8_t *string);
 void LCD_I2C_PrintChar(uint8_t string);
 

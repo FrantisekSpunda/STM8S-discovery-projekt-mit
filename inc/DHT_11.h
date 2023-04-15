@@ -3,32 +3,30 @@
 
 #include "stm8s.h"
 
-#define TRIGGER_PORT GPIOB
-#define TRIGGER_PIN GPIO_PIN_4
+#define DHT_11_PORT GPIOB
 
-#define DHT11_PORT GPIOB
-#define DHT11_PIN GPIO_PIN_5
+#define DHT_11_LOW(BAGR) GPIO_WriteLow(DHT_11_PORT, BAGR)
+#define DHT_11_HIGH(BAGR) GPIO_WriteHigh(DHT_11_PORT, BAGR)
+#define DHT_11_REVERSE(BAGR) GPIO_WriteReverse(DHT_11_PORT, BAGR)
 
+#define DHT_11_READ(BAGR) GPIO_ReadInputPin(DHT_11_PORT, BAGR)
+#define DHT_11_PUSH(BAGR) (GPIO_ReadInputPin(DHT_11_PORT, BAGR) == RESET)
 
-#define TRIGGER_PORT GPIOB
-#define TRIGGER_PIN GPIO_PIN_4
+typedef enum
+{
+  WAKE,
+  DATA,
+  SLEEEP
+} state_t;
 
-#define DHT11_PORT GPIOB
-#define DHT11_PIN GPIO_PIN_5
+struct DHT_11_config
+{
+  GPIO_Pin_TypeDef trigger;
+  GPIO_Pin_TypeDef reader;
+};
 
-#define LOW(BAGR) GPIO_WriteLow(BAGR##_PORT, BAGR##_PIN)
-#define HIGH(BAGR) GPIO_WriteHigh(BAGR##_PORT, BAGR##_PIN)
-#define REVERSE(BAGR) GPIO_WriteReverse(BAGR##_PORT, BAGR##_PIN)
-
-#define READ(BAGR) GPIO_ReadInputPin(BAGR##_PORT, BAGR##_PIN)
-#define PUSH(BAGR) (GPIO_ReadInputPin(BAGR##_PORT, BAGR##_PIN)==RESET)
-#define Mindex 99
-
-typedef enum { WAKE, DATA, SLEEEP } state_t;
-
-void init_DHT_11();
-uint64_t read_DHT_11();
-char * getValue(uint64_t data, char value);
-
+void init_DHT_11(struct DHT_11_config *config);
+uint64_t read_DHT_11(struct DHT_11_config *config);
+char *getValue(uint64_t data, char value);
 
 #endif

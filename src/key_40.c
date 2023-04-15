@@ -2,55 +2,60 @@
 #include "stm8s.h"
 #include "key_40.h"
 
-uint8_t position = 1;
 uint8_t stateCLKprev;
 uint8_t stateCLK;
+uint8_t stateSWprev;
 uint8_t stateSW;
+uint8_t stateOTHERprev;
+uint8_t stateOTHER;
 uint8_t stateDT;
 
-// INTERRUPT_HANDLER(EXTI_PORTB_IRQHandler, 4)
-// {
-//   stateCLK = READ_KEY_40(CLK);
+struct KEY_40_config KEY_40_config_global;
 
-//   if (stateCLK != stateCLKprev)
-//   {
-//     stateDT = READ_KEY_40(DT);
-//     if (stateDT == stateCLK)
-//     {
-//       position--;
-//       onLeft();
-//     }
-//     else
-//     {
-//       position++;
-//       onRight();
-//     }
-//   }
-
-//   stateCLKprev = stateCLK;
-//   stateSW = READ_KEY_40(SW);
-// }
-
-void init_key_40()
+INTERRUPT_HANDLER(EXTI_PORTD_IRQHandler, 6)
 {
-  GPIO_Init(CLK_PORT, CLK_PIN, GPIO_MODE_IN_PU_IT);
-  GPIO_Init(DT_PORT, DT_PIN, GPIO_MODE_IN_PU_IT);
-  GPIO_Init(SW_PORT, SW_PIN, GPIO_MODE_IN_PU_IT);
+  // Rotating logic
+  stateCLK = READ_KEY_40(KEY_40_config_global.clk);
+  if (stateCLK != stateCLKprev)
+  {
+    stateDT = READ_KEY_40(KEY_40_config_global.dt);
+    if (stateDT == stateCLK)
+    {
+      KEY_40_config_global.onLeft();
+    }
+    else
+    {
+      KEY_40_config_global.onRight();
+    }
+  }
+  stateCLKprev = stateCLK;
 
-  // EXTI_SetExtIntSensitivity(EXTI_PORT_GPIOB, EXTI_SENSITIVITY_RISE_FALL);
-  ITC_SetSoftwarePriority(ITC_IRQ_PORTB, ITC_PRIORITYLEVEL_1);
-  enableInterrupts();
+  // Push logic
+  stateSWprev = stateSW;
+  stateSW = READ_KEY_40(KEY_40_config_global.sw);
+  if (stateSW && stateSW != stateSWprev)
+  {
+    KEY_40_config_global.onPush();
+  }
 
-  stateCLKprev = READ_KEY_40(CLK);
+  // ! OTHER -------------------------------
+  stateOTHERprev = stateOTHER;
+  stateOTHER = READ_KEY_40(KEY_40_config_global.other);
+  if (stateOTHER && stateOTHER != stateOTHERprev)
+  {
+    KEY_40_config_global.onOther();
+  }
 }
 
-/**
- * Function for returning position of encoder.
- * MUST BE IN ENDLESS WHILE
- *
- * @return uint8_t 0-255 positions !! 255 is not one round
- */
-uint8_t position_key_40(void (*onRight)(), void (*onLeft)())
+void init_key_40(struct KEY_40_config *config)
 {
-  return position;
+  GPIO_Init(KEY_40_PORT, config->clk, GPIO_MODE_IN_PU_IT);
+  GPIO_Init(KEY_40_PORT, config->dt, GPIO_MODE_IN_PU_IT);
+  GPIO_Init(KEY_40_PORT, config->sw, GPIO_MODE_IN_PU_IT);
+  // ! OTHER -------------------------------
+  GPIO_Init(KEY_40_PORT, config->other, GPIO_MODE_IN_PU_IT);
+
+  KEY_40_config_global = *config;
+
+  stateCLKprev = READ_KEY_40(config->clk);
 }

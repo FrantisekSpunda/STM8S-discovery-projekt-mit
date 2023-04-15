@@ -4,24 +4,25 @@
 #include "stm8s.h"
 
 // CLK pin
-#define CLK_PORT GPIOB
-#define CLK_PIN GPIO_PIN_0
-
-// DT pin
-#define DT_PORT GPIOB
-#define DT_PIN GPIO_PIN_1
-
-// SW pin for button
-#define SW_PORT GPIOB
-#define SW_PIN GPIO_PIN_2
+#define KEY_40_PORT GPIOD
 
 /**
  * For read pins. Enter CLK, DT or SW
  */
-#define READ_KEY_40(PIN) (GPIO_ReadInputPin(PIN##_PORT, PIN##_PIN) == RESET)
+#define READ_KEY_40(PIN) (GPIO_ReadInputPin(KEY_40_PORT, PIN) == RESET)
+struct KEY_40_config
+{
+  void (*onRight)();
+  void (*onLeft)();
+  void (*onPush)();
+  void (*onOther)();
+  GPIO_Pin_TypeDef clk;
+  GPIO_Pin_TypeDef dt;
+  GPIO_Pin_TypeDef sw;
+  GPIO_Pin_TypeDef other;
+};
 
 // Functions for encoder
-void init_key_40();
-uint8_t position_key_40(void (*onRight)(), void (*onLeft)());
+void init_key_40(struct KEY_40_config *config);
 
 #endif
