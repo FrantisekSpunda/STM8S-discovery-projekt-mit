@@ -19,6 +19,7 @@
 		"stm8s_conf.h": "c",
 		"swi2c.h": "c",
 		"stm8s_it.h": "c",
-		"key_40.h": "c"
+		"key_40.h": "c",
+		"stdlib.h": "c"
 	}
 }

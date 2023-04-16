@@ -25,8 +25,15 @@ struct DHT_11_config
   GPIO_Pin_TypeDef reader;
 };
 
+struct DHT_11_response
+{
+  uint16_t temperature;
+  uint8_t humidity;
+};
+
 void init_DHT_11(struct DHT_11_config *config);
 uint64_t read_DHT_11(struct DHT_11_config *config);
 char *getValue(uint64_t data, char value);
+void getResponse_DHT_11(struct DHT_11_response *config, uint64_t data);
 
 #endif

@@ -85,3 +85,13 @@ _home_LCD_UI
 _scroll_up_LCD_UI
 _scroll_down_LCD_UI
 _GPIO_WriteReverse
+_UI_set_point
+_getResponse_DHT_11
+_init_eeprom
+_FLASH_SetProgrammingTime
+_FLASH_ProgramByte
+_FLASH_ReadByte
+_write_eeprom
+_loadDataStore
+_read_eeprom
+_saveDataStore

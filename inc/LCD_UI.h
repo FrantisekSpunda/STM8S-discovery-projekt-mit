@@ -10,8 +10,8 @@ struct LCD_UI_config
   uint8_t scroll;
   uint8_t selected;
   uint8_t pages_length;
-  FunctionPointer pages_funcs[3];
-  char *pages[3];
+  FunctionPointer pages_funcs[10];
+  char *pages[10];
 };
 
 void init_LCD_UI(struct LCD_UI_config *config);

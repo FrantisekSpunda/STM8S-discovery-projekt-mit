@@ -61,7 +61,8 @@ uint64_t read_DHT_11(struct DHT_11_config *config)
         uint8_t temperatureH = data >> 16;
         uint8_t temperatureL = data >> 8;
         uint8_t checksum = data;
-        response = data;
+        if (humidityH + humidityL + temperatureH + temperatureL == checksum)
+          response = data;
         state = SLEEEP;
       }
       break;
@@ -80,12 +81,12 @@ char *getValue(uint64_t data, char value)
   uint8_t tempH = data >> 16;
   uint8_t tempL = data >> 8;
   uint8_t humidityH = data >> 32;
-  uint8_t humidityL = data >> 24;
+
   char *myString = (char *)malloc(sizeof(char) * 20);
   switch (value)
   {
   case 'T':
-    sprintf(myString, "%d.%d", tempH, tempL);
+    sprintf(myString, "%d.%d C", tempH, tempL);
     return myString;
 
   case 'H':
@@ -97,6 +98,15 @@ char *getValue(uint64_t data, char value)
   default:
     return "";
   }
+}
+
+void getResponse_DHT_11(struct DHT_11_response *config, uint64_t data)
+{
+  uint16_t temperature = data >> 8;
+  uint8_t humidityH = data >> 32;
+
+  config->temperature = temperature;
+  config->humidity = humidityH;
 }
 
 INTERRUPT_HANDLER(EXTI_PORTB_IRQHandler, 4)
