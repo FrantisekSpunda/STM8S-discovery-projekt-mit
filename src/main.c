@@ -183,6 +183,11 @@ void UI_temp_2()
     }
     }
 }
+void UI_reset()
+{
+    LCD_I2C_Clear();
+    LCD_I2C_Print("Confirm");
+}
 // -----------------
 
 // * Functions for UI EVENTS
@@ -190,6 +195,20 @@ void KEY_40_onPush()
 {
     switch (UI_config_global.selected)
     {
+    case 4:
+    {
+        LCD_I2C_Clear();
+        dataStore.fanLevel = 0,
+        dataStore.setLevel = 0,
+        dataStore.curr_temp_1 = 0,
+        dataStore.max_temp_1 = 0,
+        dataStore.min_temp_1 = 0xffffffff,
+        dataStore.curr_temp_2 = 0,
+        dataStore.max_temp_2 = 0,
+        dataStore.min_temp_2 = 0xffffffff,
+        saveDataStore();
+        LCD_I2C_Print("Cleared!!");
+    }
     case 99:
         scrollLevel = 0;
         select_LCD_UI();
@@ -286,9 +305,9 @@ struct KEY_40_config KEY_40_conf = {
 // UI configuration
 struct LCD_UI_config UI_config = {
     .scroll = 0,
-    .pages_length = 4,
-    .pages = {"Fan", "Set Point", "Temperature 1", "Temperature 2"},
-    .pages_funcs = {&UI_fan, &UI_set_point, &UI_temp_1, &UI_temp_2},
+    .pages_length = 5,
+    .pages = {"Fan", "Set Point", "Temperature 1", "Temperature 2", "Reset memmory"},
+    .pages_funcs = {&UI_fan, &UI_set_point, &UI_temp_1, &UI_temp_2, &UI_reset},
 };
 
 void setup(void)

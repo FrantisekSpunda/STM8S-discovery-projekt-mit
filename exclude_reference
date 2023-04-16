@@ -95,3 +95,4 @@ _write_eeprom
 _loadDataStore
 _read_eeprom
 _saveDataStore
+_UI_reset
