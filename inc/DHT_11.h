@@ -3,7 +3,7 @@
 
 #include "stm8s.h"
 
-#define DHT_11_PORT GPIOB
+#define DHT_11_PORT GPIOC
 
 #define DHT_11_LOW(BAGR) GPIO_WriteLow(DHT_11_PORT, BAGR)
 #define DHT_11_HIGH(BAGR) GPIO_WriteHigh(DHT_11_PORT, BAGR)

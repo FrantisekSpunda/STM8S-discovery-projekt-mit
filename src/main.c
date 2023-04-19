@@ -284,12 +284,12 @@ void KEY_40_onLeft()
 
 // I/O configuration
 struct DHT_11_config DHT_11_first = {
-    .trigger = GPIO_PIN_4, // Port C
-    .reader = GPIO_PIN_5,  // Port C
+    .trigger = GPIO_PIN_2, // Port C
+    .reader = GPIO_PIN_3,  // Port C
 };
 struct DHT_11_config DHT_11_second = {
-    .trigger = GPIO_PIN_6, // Port C
-    .reader = GPIO_PIN_7,  // Port C
+    .trigger = GPIO_PIN_4, // Port C
+    .reader = GPIO_PIN_5,  // Port C
 };
 struct KEY_40_config KEY_40_conf = {
     .clk = GPIO_PIN_2,   // Port D
@@ -315,8 +315,8 @@ void setup(void)
     CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV1); // taktovani MCU na 16MHz
 
     // Innterupt for sensors on level 2
-    EXTI_SetExtIntSensitivity(EXTI_PORT_GPIOB, EXTI_SENSITIVITY_RISE_FALL);
-    ITC_SetSoftwarePriority(ITC_IRQ_PORTB, ITC_PRIORITYLEVEL_2);
+    EXTI_SetExtIntSensitivity(EXTI_PORT_GPIOC, EXTI_SENSITIVITY_RISE_FALL);
+    ITC_SetSoftwarePriority(ITC_IRQ_PORTC, ITC_PRIORITYLEVEL_2);
 
     // Innterupt for encoder on highest level
     EXTI_SetExtIntSensitivity(EXTI_PORT_GPIOD, EXTI_SENSITIVITY_RISE_FALL);

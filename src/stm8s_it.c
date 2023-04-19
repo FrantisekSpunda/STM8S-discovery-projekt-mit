@@ -120,21 +120,21 @@ INTERRUPT_HANDLER(EXTI_PORTA_IRQHandler, 3)
 //   * @param  None
 //   * @retval None
 //   */
-// INTERRUPT_HANDLER(EXTI_PORTB_IRQHandler, 4)
-// {
-// }
+INTERRUPT_HANDLER(EXTI_PORTB_IRQHandler, 4)
+{
+}
 
 /**
  * @brief  External Interrupt PORTC Interrupt routine
  * @param  None
  * @retval None
  */
-INTERRUPT_HANDLER(EXTI_PORTC_IRQHandler, 5)
-{
-  /* In order to detect unexpected events during development,
-     it is recommended to set a breakpoint on the following instruction.
-  */
-}
+// INTERRUPT_HANDLER(EXTI_PORTC_IRQHandler, 5)
+// {
+//   /* In order to detect unexpected events during development,
+//      it is recommended to set a breakpoint on the following instruction.
+//   */
+// }
 
 /**
  * @brief  External Interrupt PORTD Interrupt routine

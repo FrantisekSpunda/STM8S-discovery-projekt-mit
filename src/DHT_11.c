@@ -109,7 +109,7 @@ void getResponse_DHT_11(struct DHT_11_response *config, uint64_t data)
   config->humidity = humidityH;
 }
 
-INTERRUPT_HANDLER(EXTI_PORTB_IRQHandler, 4)
+INTERRUPT_HANDLER(EXTI_PORTC_IRQHandler, 5)
 {
   uint16_t pulse_length;
 

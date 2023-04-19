@@ -38,7 +38,6 @@ int8_t *read_eeprom(uint32_t address, uint8_t length)
   for (uint8_t i = 0; i < length; ++i)
   {
     data[i] = FLASH_ReadByte(FLASH_DATA_START_PHYSICAL_ADDRESS + address + i);
-    printf("data pico %d [%d]\n\r", data[i], i);
   }
 
   return data;
