@@ -40,7 +40,7 @@ uint64_t read_DHT_11(struct DHT_11_config *config)
       break;
 
     case WAKE:
-      if (milis() - lasttime < 40)
+      if (milis() - lasttime < 25)
       {
         DHT_11_LOW(config->trigger);
       }

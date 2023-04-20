@@ -379,6 +379,9 @@ int main(void)
 
                 if (dataStore.min_temp_1 > response.temperature)
                     dataStore.min_temp_1 = response.temperature;
+
+                if (UI_config_global.selected == 2)
+                    UI_temp_1();
             }
 
             res = read_DHT_11(&DHT_11_second);
@@ -398,6 +401,9 @@ int main(void)
 
                 if (dataStore.min_temp_2 > response.temperature)
                     dataStore.min_temp_2 = response.temperature;
+
+                if (UI_config_global.selected == 3)
+                    UI_temp_2();
             }
         }
 
